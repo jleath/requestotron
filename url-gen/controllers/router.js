@@ -1,5 +1,6 @@
 const requestRouter = require('express').Router();
 const config = require('../util/config');
+const crypto = require('crypto');
 const { Pool } = require('pg');
 
 const pool = new Pool({
@@ -10,7 +11,8 @@ const pool = new Pool({
 });
 
 const createBinHandler = async (req, res) => {
-    const args = ["fhfh5"];
+    const url = crypto.randomBytes(4).toString('hex');
+    const args = [url];
     const query = `
     INSERT INTO bins (url)
     VALUES ($1)
