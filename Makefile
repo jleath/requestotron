@@ -39,3 +39,9 @@ db/migrations/new:
 db/migrations/up: confirm
 	@echo 'Running 1 up migration...'
 	migrate -path ./migrations -database ${REQUESTO_DB_DSN} up 1
+
+## db/migrations/down: apply 1 down database migration
+.PHONY: db/migrations/down
+db/migrations/down: confirm
+	@echo 'Running 1 down migration...'
+	migrate -path ./migrations -database ${REQUESTO_DB_DSN} down 1
