@@ -2,4 +2,3 @@
 **/.env
 ./frontend/build
 .DS_Store
-.envrc
