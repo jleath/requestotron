@@ -34,8 +34,8 @@ db/migrations/new:
 	@echo 'Creating migration file for ${name}...'
 	migrate create -seq -ext=.sql -dir=./migrations ${name}
 
-## db/migrations/up: apply all up database migrations
+## db/migrations/up: apply 1 up database migration
 .PHONY: db/migrations/up
 db/migrations/up: confirm
-	@echo 'Running up migrations...'
-	migrate -path ./migrations -database ${REQUESTO_DB_DSN} up
+	@echo 'Running 1 up migration...'
+	migrate -path ./migrations -database ${REQUESTO_DB_DSN} up 1
