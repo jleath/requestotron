@@ -17,3 +17,5 @@
 4.  Deletion after 48hrs
   - Cron job every 24 hours
   - Triggers another Node file to cleanup PostgreSQL and Mongo
+
+ALTER USER requestotron WITH SUPERUSER;
