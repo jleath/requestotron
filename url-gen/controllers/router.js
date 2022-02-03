@@ -21,7 +21,7 @@ const createBinHandler = async (req, res) => {
     RETURNING url;`;
     try {
         const { rows } = await pool.query(query, args);
-        logger.info(`Created bin with url ${rows[0]}`);
+        logger.info(`Created bin with url ${url}`);
         res.status(201).json(rows[0]);
     } catch (err) {
         logger.error(err);
@@ -51,16 +51,7 @@ const getBinHandler = async (req, res, next) => {
   }
 };
 
-const addRequest = async (req, res) => {
-  let binId;
-  try {
-    binId = await getBinId(req.params.url);
-    logger.info(`Added request to bin ${binId}`);
-  } catch (err) {
-    logger.error(err);
-    res.status(400).send();
-  }
-
+const addPayloadToBin = async (binId, req) => {
   const payloadData = {
     binId,
     ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
@@ -71,8 +62,23 @@ const addRequest = async (req, res) => {
     time: req._startTime,
   };
 
+  const payload = await new RequestPayload(payloadData).save();
+  return payload;
+};
+
+const addRequest = async (req, res) => {
+  let binId;
   try {
-    await new RequestPayload(payloadData).save();
+    binId = await getBinId(req.params.url);
+    logger.info(`Added request to bin ${binId}`);
+  } catch (err) {
+    logger.error(err);
+    res.status(404).send();
+    return
+  }
+
+  try {
+    await addPayloadToBin(binId, req);
     res.status(200).send();
   } catch (err) {
     logger.error(err);
