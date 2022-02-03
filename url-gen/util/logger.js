@@ -7,6 +7,7 @@ const info = (...args) => {
 
 const error = (...args) => {
   console.error(...args);
+  logToFile(args);
 };
 
 const logToFile = text => {
