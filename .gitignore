@@ -2,3 +2,4 @@
 **/.env
 ./frontend/build
 .DS_Store
+**/url-gen.log
