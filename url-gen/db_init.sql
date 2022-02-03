@@ -11,7 +11,7 @@ CREATE TABLE requests (
   bin_id int NOT NULL,
   created timestamp DEFAULT CURRENT_TIMESTAMP,
   payload_size_bytes int NOT NULL,
-  payload_id int NOT NULL,
+  payload_id text NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(bin_id) REFERENCES bins(id) ON DELETE CASCADE
 );
