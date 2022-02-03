@@ -21,6 +21,7 @@ const createBinHandler = async (req, res) => {
     RETURNING url;`;
     try {
         const { rows } = await pool.query(query, args);
+        logger.info(`Created bin with url ${rows[0]}`);
         res.status(201).json(rows[0]);
     } catch (err) {
         logger.error(err);
@@ -28,11 +29,11 @@ const createBinHandler = async (req, res) => {
     }
 };
 
-const getBinId= async (url) => {
+const getBinId = async (url) => {
   const query = `SELECT id FROM bins WHERE url=$1;`;
   const { rows } = await pool.query(query, [url]);
   return parseInt(rows[0].id, 10);
-}
+};
 
 const getBinHandler = async (req, res, next) => {
   if (req.query.inspect === undefined) {
@@ -48,14 +49,15 @@ const getBinHandler = async (req, res, next) => {
     logger.error(err);
     res.sendStatus(404);
   }
-}
+};
 
 const addRequest = async (req, res) => {
   let binId;
   try {
     binId = await getBinId(req.params.url);
+    logger.info(`Added request to bin ${binId}`);
   } catch (err) {
-    console.log(err.message);
+    logger.error(err);
     res.status(400).send();
   }
 
@@ -66,6 +68,7 @@ const addRequest = async (req, res) => {
     method: req.method,
     headers: req.headers,
     body: req.body,
+    time: req._startTime,
   };
 
   try {

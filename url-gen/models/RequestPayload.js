@@ -22,6 +22,10 @@ const RequestPayloadSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  time: {
+    type: Date,
+    required: true,
+  },
 });
 
 RequestPayloadSchema.set('toJSON', {
