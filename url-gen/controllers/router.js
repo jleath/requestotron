@@ -45,8 +45,13 @@ const getBinHandler = async (req, res, next) => {
   const url = req.params.url;
   try {
     binId = await getBinId(url);
-    res.status(200).json(binId);
-
+    const query = `SELECT * FROM requests WHERE bin_id = $1;`;
+    const answer = await pool.query(query, [binId]);
+    const rows = answer.rows;
+    console.log(rows);
+    const ids = rows.map(row => row.payload_id);
+    const results = await RequestPayload.find({ '_id': { $in: ids } });
+    res.status(200).json(results);
   } catch (err) {
     console.log(err)
     res.sendStatus(404);
