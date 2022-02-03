@@ -5,6 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const logger = require('./util/logger');
 const requestRouter = require('./controllers/router');
+const bodyParser = require('body-parser');
 require('express-async-errors');
 
 logger.info('Connecting to MongoDB');
@@ -17,6 +18,7 @@ mongoose.connect(config.MONGODB_URI)
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.text({type: '*/*'}));
 app.use(middleware.requestLogger);
 app.use('/', requestRouter)
 app.use(middleware.unknownEndpoint);
