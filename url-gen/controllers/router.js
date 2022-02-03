@@ -67,7 +67,7 @@ const addRequest = async (req, res) => {
     url: req.url,
     method: req.method,
     headers: req.headers,
-    body: req.body,
+    body: Object.keys(req.body).length === 0 ? '' : req.body,
     time: req._startTime,
   };
 
