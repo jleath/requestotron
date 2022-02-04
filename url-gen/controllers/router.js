@@ -86,8 +86,8 @@ const addRequest = async (req, res) => {
   }
 };
 
-requestRouter.post('/', createBinHandler);
-requestRouter.get('/:url', getBinHandler);
-requestRouter.all('/:url', addRequest);
+requestRouter.post('/bin', createBinHandler);
+requestRouter.get('/bin/:url', getBinHandler);
+requestRouter.all('/bin/:url', addRequest);
 
 module.exports = requestRouter;
