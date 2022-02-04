@@ -20,7 +20,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.text({type: '*/*'}));
 app.use(middleware.requestLogger);
-app.use('/', requestRouter)
+app.use('/bin', requestRouter)
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
