@@ -15,7 +15,7 @@ const error = (...args) => {
 const logToFile = (args) => {
   args.forEach(arg => {
     const text = `${new Date()}: ${arg}` + "\n";
-    fs.appendFile(logFilePath, text, err => {
+    fs.appendFile(config.LOG_FILE_PATH, text, err => {
       if (err) {
         error(`Unable to write to log: ${text}`);
       }

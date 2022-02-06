@@ -1,6 +1,7 @@
 const logger = require('/home/wor101/requestotron/url-gen/util/logger.js');
 const { Pool } = require('pg');
 const { response } = require('express');
+const RequestPayload = require("../models/RequestPayload");
 
 const pool = new Pool({
   host: "localhost",

@@ -4,6 +4,7 @@ const config = require('../util/config');
 const crypto = require('crypto');
 const RequestPayload = require("../models/RequestPayload");
 const { Pool } = require('pg');
+const { request } = require('http');
 
 const pool = new Pool({
     host: config.DB_HOST,
@@ -86,7 +87,19 @@ const addRequest = async (req, res) => {
   }
 };
 
+const getAllBinURLs = async () => {
+  try {
+   const {rows} = await pool.query('SELECT url FROM bins;');
+   logger.info('All URLs retrieved: ', rows.length);
+   return rows
+  } catch (err) {
+    logger.error(err);
+    res.status(500).send(err.message);
+  }
+}
+
 requestRouter.post('/bin', createBinHandler);
+requestRouter.get('/bin', getAllBinURLs)
 requestRouter.get('/bin/:url', getBinHandler);
 requestRouter.all('/bin/:url', addRequest);
 
