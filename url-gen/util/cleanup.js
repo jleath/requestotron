@@ -1,4 +1,4 @@
-const logger = require('/home/wor101/code/capstone/requestotron/url-gen/util/logger.js');
+const logger = require('/home/wor101/requestotron/url-gen/util/logger.js');
 const { Pool } = require('pg');
 const { response } = require('express');
 
@@ -25,7 +25,7 @@ const queryAllBins = async () => {
 
 const sortBinsByTime = (allBins) => {
   allBins.sort((firstBin, secondBin) => {
-    return firstBin.created_at - secondBin.created_at;
+    return firstBin.created - secondBin.created;
   })
   logger.info('Bins sorted by time: ', allBins.length)
   return allBins
@@ -43,7 +43,7 @@ const deleteBin = async (binId) => {
 }
 
 const deleteOldBins = async () => {
-  const query = "DELETE FROM bins WHERE created_at < NOW() - INTERVAL '24 HOURS'";
+  const query = "DELETE FROM bins WHERE created < NOW() - INTERVAL '24 HOURS'";
   try {
     const response = await pool.query(query);
     logger.info('Old Bins deleted');

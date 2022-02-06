@@ -1,6 +1,6 @@
 const config = require('./config');
 const fs = require('fs');
-const logFilePath = '/home/wor101/code/capstone/requestotron/url-gen/util/url-gen.log'
+const logFilePath = '/home/wor101/requestotron/url-gen/util/url-gen.log';
 
 const info = (...args) => {
   console.log(...args);
