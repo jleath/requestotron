@@ -87,11 +87,11 @@ const addRequest = async (req, res) => {
   }
 };
 
-const getAllBinURLs = async () => {
+const getAllBinURLs = async (req, res) => {
   try {
    const {rows} = await pool.query('SELECT url FROM bins;');
    logger.info('All URLs retrieved: ', rows.length);
-   return rows
+   res.status(200).send(rows)
   } catch (err) {
     logger.error(err);
     res.status(500).send(err.message);
