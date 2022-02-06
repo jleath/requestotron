@@ -1,5 +1,6 @@
 const config = require('./config');
 const fs = require('fs');
+const logFilePath = '/home/wor101/code/capstone/requestotron/url-gen/util/url-gen.log'
 
 const info = (...args) => {
   console.log(...args);
@@ -14,7 +15,7 @@ const error = (...args) => {
 const logToFile = (args) => {
   args.forEach(arg => {
     const text = `${new Date()}: ${arg}` + "\n";
-    fs.appendFile(config.LOG_FILE_PATH, text, err => {
+    fs.appendFile(logFilePath, text, err => {
       if (err) {
         error(`Unable to write to log: ${text}`);
       }
