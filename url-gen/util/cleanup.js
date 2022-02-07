@@ -1,7 +1,7 @@
 const logger = require('/home/wor101/requestotron/url-gen/util/logger.js');
 const { Pool } = require('pg');
 const { response } = require('express');
-const RequestPayload = require("../models/RequestPayload");
+//const RequestPayload = require("../models/RequestPayload");
 
 const pool = new Pool({
   host: "localhost",
@@ -16,9 +16,11 @@ const queryAllBins = async () => {
 
   try {
     const { rows } = await pool.query(allBinsQuery);
+    //console.log('All bins queried for cleanup: ', rows.length);
     logger.info('All bins queried for cleanup: ', rows.length );
     allBins = rows;
   } catch (err) {
+    //console.log(err)
     logger.error(err);
   }
   return allBins;
@@ -47,8 +49,10 @@ const deleteOldBins = async () => {
   const query = "DELETE FROM bins WHERE created < NOW() - INTERVAL '24 HOURS'";
   try {
     const response = await pool.query(query);
+    //console.log('Old Bins deleted');
     logger.info('Old Bins deleted');
   } catch (err) {
+    //console.log(err);
     logger.error(err);
   }
 }
